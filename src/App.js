@@ -2,6 +2,8 @@ import { Component } from 'react';
 import { nanoid } from 'nanoid';
 
 import ContactForm from 'components/ContactForm/ContactForm';
+import Filter from 'components/Filter/Filter';
+import ContactList from 'components/ContactList/ContactList';
 class App extends Component {
   state = {
     contacts: [],
@@ -19,8 +21,22 @@ class App extends Component {
       number,
     };
 
+    this.setState(({ contacts }) => {
+      const check = contacts.find(item => item.name === name);
+      if (check) {
+        alert("Таке ім'я вже додано до списку!");
+        return;
+      } else {
+        return {
+          contacts: [...contacts, contact],
+        };
+      }
+    });
+  };
+
+  deleteContact = id => {
     this.setState(({ contacts }) => ({
-      contacts: [...contacts, contact],
+      contacts: contacts.filter(contact => contact.id !== id),
     }));
   };
 
@@ -31,21 +47,17 @@ class App extends Component {
         .includes(this.state.filter.toLowerCase());
     });
     return (
-      <section className="formSection">
+      <div className="formSection">
         <h1>Phonebook</h1>
         <ContactForm addContacts={this.addContactsToList} />
-        <h1>Contacts</h1>
-        <p>Find contacts by name</p>
-        <input onChange={this.addFilterValue} />
 
-        <ul>
-          {visible.map(contact => (
-            <li key={contact.id}>
-              {contact.name}: {contact.number}
-            </li>
-          ))}
-        </ul>
-      </section>
+        <h1>Contacts</h1>
+        <Filter addFilterValue={this.addFilterValue} />
+        <ContactList
+          visibleContacts={visible}
+          deleteContact={this.deleteContact}
+        />
+      </div>
     );
   }
 }
