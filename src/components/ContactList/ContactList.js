@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import s from './ContactList.module.css';
+import propTypes from 'prop-types';
 
 class ContactList extends Component {
   render() {
@@ -7,7 +9,10 @@ class ContactList extends Component {
         {this.props.visibleContacts.map(contact => (
           <li key={contact.id}>
             {contact.name}: {contact.number}
-            <button onClick={() => this.props.deleteContact(contact.id)}>
+            <button
+              className={s.deleteBtn}
+              onClick={() => this.props.deleteContact(contact.id)}
+            >
               delete
             </button>
           </li>
@@ -17,3 +22,7 @@ class ContactList extends Component {
   }
 }
 export default ContactList;
+
+ContactList.propTypes = {
+  visibleContacts: propTypes.array,
+};

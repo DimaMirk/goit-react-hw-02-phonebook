@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import propTypes from 'prop-types';
 
 class Filter extends Component {
   render() {
@@ -12,3 +13,7 @@ class Filter extends Component {
 }
 
 export default Filter;
+
+Filter.propTypes = {
+  addFilterValue: propTypes.func,
+};
