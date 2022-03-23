@@ -22,7 +22,9 @@ class App extends Component {
     };
 
     this.setState(({ contacts }) => {
-      const check = contacts.find(item => item.name === name);
+      const check = contacts.find(
+        item => item.name.toLowerCase() === name.toLowerCase()
+      );
       if (check) {
         alert("Таке ім'я вже додано до списку!");
         return;
